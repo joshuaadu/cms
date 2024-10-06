@@ -1,10 +1,18 @@
-<cms-header />
+<cms-header (selectedFeatureEvent)="selectedFeature = $event" />
 
 <!-- <main class="flex justify-center gap-8">
   <cms-contacts />
   <cms-contact-detail/>
 </main> -->
+@switch (selectedFeature) { @case ('documents') {
+<cms-documents />
+} @case ('messages') {
+<cms-messages />
+} @case ('contacts') {
 <cms-contacts />
+} @default {
+<p>Page not found</p>
+} }
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->

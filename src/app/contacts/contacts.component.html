@@ -2,9 +2,12 @@
   class="w-full flex flex-col md:flex-row md:justify-between gap-8 p-4 md:px-32"
 >
   <div class="md:basis-7/12">
-    <cms-contact-list />
+    <cms-contact-list
+      [contacts]="contacts"
+      (selectedContactEvent)="selectedContact = $event"
+    />
   </div>
   <div class="md:basis-5/12">
-    <cms-contact-detail />
+    <cms-contact-detail [selectedContact]="selectedContact" />
   </div>
 </main>

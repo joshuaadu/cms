@@ -1,29 +1,30 @@
+@if ( selectedContact != null ) {
 <article class="rounded-xl border-2 border-gray-100 bg-white">
   <div class="flex items-start gap-4 p-4 sm:p-6 lg:p-8">
     <!-- <a href="#" class="block shrink-0"> -->
     <img
       alt=""
-      src="{{ contact?.imageUrl }}"
+      src="{{ selectedContact.imageUrl }}"
       class="size-3/12 rounded-lg object-cover"
     />
     <!-- </a> -->
 
     <div>
-      <h3 class="font-medium sm:text-lg">{{ contact?.name }}</h3>
+      <h3 class="font-medium sm:text-lg">{{ selectedContact.name }}</h3>
 
       <div class="mt-4 sm:flex sm:items-center sm:justify-center sm:gap-4">
         <strong class="font-medium">Email</strong>
 
         <span class="hidden sm:block sm:h-px sm:w-8 sm:bg-yellow-500"></span>
 
-        <p class="mt-0.5 opacity-50 sm:mt-0">{{ contact?.email }}</p>
+        <p class="mt-0.5 opacity-50 sm:mt-0">{{ selectedContact.email }}</p>
       </div>
       <div class="mt-4 sm:flex sm:items-center sm:justify-center sm:gap-4">
         <strong class="font-medium">Phone</strong>
 
         <span class="hidden sm:block sm:h-px sm:w-8 sm:bg-yellow-500"></span>
 
-        <p class="mt-0.5 opacity-50 sm:mt-0">{{ contact?.phone }}</p>
+        <p class="mt-0.5 opacity-50 sm:mt-0">{{ selectedContact.phone }}</p>
       </div>
     </div>
   </div>
@@ -75,3 +76,4 @@
     </div>
   </div>
 </article>
+}

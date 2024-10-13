@@ -2,14 +2,9 @@
   class="w-full flex flex-col md:flex-row md:justify-between gap-8 p-4 md:px-32"
 >
   <div class="md:basis-7/12">
-    <!-- <cms-document-list
-      [documents]="documents"
-      (selectedDocumentEvent)="selectedDocument = $event"
-    /> -->
-    <p>Document list</p>
+    <cms-document-list (selectedDocumentEvent)="selectedDocument = $event" />
   </div>
   <div class="md:basis-5/12">
-    <!-- <cms-document-detail [selectedDocument]="selectedDocument" /> -->
-    <p>Document detail</p>
+    <cms-document-detail [document]="selectedDocument" />
   </div>
 </main>

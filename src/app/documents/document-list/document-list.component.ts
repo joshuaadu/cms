@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DocumentItemComponent } from '../document-item/document-item.component';
-import { Document, DocumentsType, DocumentType } from '../document.model';
+import {  DocumentsType, DocumentType } from '../document.model';
 
 @Component({
   selector: 'cms-document-list',
@@ -10,10 +10,47 @@ import { Document, DocumentsType, DocumentType } from '../document.model';
   styleUrl: './document-list.component.css',
 })
 export class DocumentListComponent {
-  @Input({ required: true }) documents!: DocumentsType;
-  @Output() selectedContactEvent = new EventEmitter<DocumentType>();
+  documents: DocumentsType = [
+    {
+      name: 'TypeScript Handbook',
+      description: 'Comprehensive guide to the TypeScript language.',
+      url: 'https://www.typescriptlang.org/docs/handbook/intro.html',
+      id: '1',
+    },
+    {
+      name: 'Angular Documentation',
+      description: 'Official Angular documentation and tutorials.',
+      url: 'https://angular.io/docs',
+      id: '2',
+    },
+    {
+      name: 'MDN Web Docs',
+      description: 'Resources for developers, by developers, from Mozilla.',
+      url: 'https://developer.mozilla.org/',
+      id: '3',
+    },
+    {
+      name: 'JavaScript Info',
+      description: 'Modern JavaScript tutorial.',
+      url: 'https://javascript.info/',
+      id: '4',
+    },
+    {
+      name: 'CSS-Tricks',
+      description: 'Tips, tricks, and techniques on using CSS.',
+      url: 'https://css-tricks.com/',
+      id: '5',
+    },
+    {
+      name: 'FreeCodeCamp',
+      description: 'Learn to code for free with interactive challenges.',
+      url: 'https://www.freecodecamp.org/',
+      id: '6',
+    },
+  ];
+  @Output() selectedDocumentEvent = new EventEmitter<DocumentType>();
 
-  onSelected(document: DocumentType) {
-    this.selectedContactEvent.emit(document);
+  onSelectedDocument(document: DocumentType) {
+    this.selectedDocumentEvent.emit(document);
   }
 }

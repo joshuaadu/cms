@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
+import { DocumentType } from './document.model';
 
 @Component({
   selector: 'cms-documents',
@@ -10,6 +11,5 @@ import { DocumentDetailComponent } from './document-detail/document-detail.compo
   styleUrl: './documents.component.css',
 })
 export class DocumentsComponent {
-  selectedDocument: any;
-  contacts: any;
+  selectedDocument: DocumentType | undefined = undefined;
 }

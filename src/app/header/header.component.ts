@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { HeaderUserMenuComponent } from "./header-user-menu/header-user-menu.component";
 
 @Component({
   selector: 'cms-header',
   standalone: true,
-  imports: [],
+  imports: [HeaderUserMenuComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })

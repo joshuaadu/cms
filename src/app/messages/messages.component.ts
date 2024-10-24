@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageEditComponent } from './message-edit/message-edit.component';
-import { MessagesType, MessageType } from './message.model';
+import { Message } from './message.model';
+import { MessageService } from './message.service';
 
 @Component({
   selector: 'cms-messages',
@@ -11,9 +12,11 @@ import { MessagesType, MessageType } from './message.model';
   styleUrl: './messages.component.css',
 })
 export class MessagesComponent {
-  messages: MessagesType = [];
+  // messages: Message[] = [];
+  constructor(private messageService: MessageService) {}
 
-  onAddMessage(message: MessageType) {
-    this.messages.push(message);
+  onAddMessage(message: Message) {
+    // this.messages.push(message);
+    this.messageService.addMessage(message);
   }
 }

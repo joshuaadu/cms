@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MessageItemComponent } from '../message-item/message-item.component';
-import { MessagesType } from '../message.model';
+import { Message } from '../message.model';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'cms-message-list',
@@ -9,6 +10,15 @@ import { MessagesType } from '../message.model';
   templateUrl: './message-list.component.html',
   styleUrl: './message-list.component.css',
 })
-export class MessageListComponent {
-  @Input({ required: true }) messages!: MessagesType;
+export class MessageListComponent implements OnInit {
+  // @Input({ required: true }) messages!: Message;
+  messages: Message[] = [];
+  constructor(private messageService: MessageService) {}
+
+  ngOnInit(): void {
+    this.messages = this.messageService.getMessages();
+    this.messageService.messageChangedEvent.subscribe((messages: Message[]) => {
+      this.messages = messages;
+    });
+  }
 }

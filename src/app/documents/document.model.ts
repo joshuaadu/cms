@@ -17,3 +17,11 @@ export type DocumentType = {
 
 // export type DocumentType = typeof Document;
 export type DocumentsType = DocumentType[];
+
+export interface Document {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  children: Document[];
+}

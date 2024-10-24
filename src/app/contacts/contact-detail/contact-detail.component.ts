@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { contacts, ContactsType } from '../../../dummy-data/contacts';
+import { Contact } from '../contact.model';
 
 @Component({
   selector: 'cms-contact-detail',
@@ -9,5 +10,5 @@ import { contacts, ContactsType } from '../../../dummy-data/contacts';
   styleUrl: './contact-detail.component.css',
 })
 export class ContactDetailComponent {
-  @Input() selectedContact: ContactsType[0] | undefined = undefined;
+  @Input() selectedContact: Contact | undefined = undefined;
 }

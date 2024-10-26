@@ -1,18 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { HeaderUserMenuComponent } from "./header-user-menu/header-user-menu.component";
+import { HeaderUserMenuComponent } from './header-user-menu/header-user-menu.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'cms-header',
   standalone: true,
-  imports: [HeaderUserMenuComponent],
+  imports: [HeaderUserMenuComponent, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
-  @Output() selectedFeatureEvent = new EventEmitter<string>();
-
-  onSelected(selectedEvent: string) {
-    // console.log(selectedEvent);
-    this.selectedFeatureEvent.emit(selectedEvent);
-  }
-}
+export class HeaderComponent {}

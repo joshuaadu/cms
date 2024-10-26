@@ -15,6 +15,7 @@ import { MessagesComponent } from './messages/messages.component';
     ContactsComponent,
     DocumentsComponent,
     MessagesComponent,
+    RouterOutlet,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

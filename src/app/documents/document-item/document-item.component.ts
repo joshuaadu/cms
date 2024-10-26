@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Document, DocumentType } from '../document.model';
 import { DocumentService } from '../document.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'cms-document-item',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './document-item.component.html',
   styleUrl: './document-item.component.css',
   host: {

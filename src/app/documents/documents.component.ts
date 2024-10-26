@@ -3,11 +3,12 @@ import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
 import { Document, DocumentType } from './document.model';
 import { DocumentService } from './document.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'cms-documents',
   standalone: true,
-  imports: [DocumentListComponent, DocumentDetailComponent],
+  imports: [DocumentListComponent, DocumentDetailComponent, RouterOutlet],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.css',
 })
@@ -21,5 +22,8 @@ export class DocumentsComponent implements OnInit {
         this.selectedDocument = document;
       }
     );
+    this.documentService.documentChangedEvent.subscribe(() => {
+      this.selectedDocument = undefined;
+    });
   }
 }

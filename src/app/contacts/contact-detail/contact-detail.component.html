@@ -31,8 +31,9 @@
 
   <div class="flex justify-between">
     <div class="flex justify-end">
-      <button
+      <a
         class="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-es-xl rounded-se-xl bg-blue-600 py-4 px-8 text-white"
+        [routerLink]="['edit']"
       >
         <!-- <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -50,11 +51,12 @@
         </svg> -->
 
         <span class="text-[10px] font-medium sm:text-xs">Edit</span>
-      </button>
+      </a>
     </div>
     <div class="flex justify-end">
       <button
         class="-mb-[2px] -me-[2px] inline-flex items-center gap-1 rounded-ee-xl rounded-ss-xl bg-red-600 px-8 py-4 text-white"
+        (click)="onDelete()"
       >
         <!-- <svg
           xmlns="http://www.w3.org/2000/svg"

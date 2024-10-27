@@ -9,16 +9,16 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './document-item.component.html',
   styleUrl: './document-item.component.css',
-  host: {
-    '(click)': 'onClick()',
-  },
+  // host: {
+  //   '(click)': 'onClick()',
+  // },
 })
 export class DocumentItemComponent {
   @Input({ required: true }) document!: Document;
 
   constructor(private documentService: DocumentService) {}
 
-  onClick() {
-    this.documentService.selectDocument(this.document);
-  }
+  // onClick() {
+  //   this.documentService.selectDocument(this.document);
+  // }
 }

@@ -2,24 +2,25 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContactsType } from '../../../dummy-data/contacts';
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'cms-contact-item',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './contact-item.component.html',
   styleUrl: './contact-item.component.css',
-  host: {
-    '(click)': 'onClick()',
-  },
+  // host: {
+  //   '(click)': 'onClick()',
+  // },
 })
 export class ContactItemComponent {
   @Input({ required: true }) contact!: Contact;
   // @Output() select = new EventEmitter<string>();
   constructor(private contactService: ContactService) {}
 
-  onClick() {
-    this.contactService.selectContact(this.contact);
-    // console.log('Contact clicked' + this.contact.name);
-  }
+  // onClick() {
+  //   this.contactService.selectContact(this.contact);
+  //   // console.log('Contact clicked' + this.contact.name);
+  // }
 }

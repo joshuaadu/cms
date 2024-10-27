@@ -4,24 +4,25 @@ import { ContactDetailComponent } from './contact-detail/contact-detail.componen
 import { contacts, ContactsType } from '../../dummy-data/contacts';
 import { Contact } from './contact.model';
 import { ContactService } from './contact.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'cms-contacts',
   standalone: true,
-  imports: [ContactListComponent, ContactDetailComponent],
+  imports: [ContactListComponent, ContactDetailComponent, RouterOutlet],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
 })
-export class ContactsComponent implements OnInit {
-  selectedContact: Contact | undefined = undefined;
-  contacts: ContactsType = contacts;
+export class ContactsComponent {
+  // selectedContact: Contact | undefined = undefined;
+  // contacts: ContactsType = contacts;
   constructor(private contactService: ContactService) {}
 
-  ngOnInit(): void {
-    this.contactService.selectedContactEvent.subscribe((contact: Contact) => {
-      this.selectedContact = contact;
-    });
-  }
+  // ngOnInit(): void {
+  //   this.contactService.selectedContactEvent.subscribe((contact: Contact) => {
+  //     this.selectedContact = contact;
+  //   });
+  // }
   // constructor(id, name,  email, phone, imageUrl, group ) { }
 
   // onSelected(contactId: string) {

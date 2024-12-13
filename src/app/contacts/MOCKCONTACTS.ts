@@ -36,7 +36,7 @@ export const MOCKCONTACTS: Contact[] = [
     email: 'godfreyko@byui.edu',
     phone: '208-496-3770',
     imageUrl: 'assets/images/godfreyko.jpg',
-    group: null,
+    group: [],
   },
   // index 4
   {

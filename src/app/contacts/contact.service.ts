@@ -1,8 +1,9 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { DestroyRef, EventEmitter, Injectable } from '@angular/core';
 import { ContactsType } from '../../dummy-data/contacts';
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +15,54 @@ export class ContactService {
   contactListChangedEvent = new Subject<Contact[]>();
   maxContactId!: number;
 
-  constructor() {
-    this.contacts = MOCKCONTACTS;
+  constructor(private httpClient: HttpClient, private destroyRef: DestroyRef) {
+    // this.contacts = MOCKCONTACTS;
+    this.maxContactId = this.getMaxId();
+
+    const subscription = this.httpClient
+      .get<Contact[]>(
+        'https://angular-cms-bf1a3-default-rtdb.firebaseio.com/contacts.json'
+      )
+      .subscribe({
+        next: (contacts) => {
+          console.log(contacts);
+          this.contacts = contacts;
+
+          this.maxContactId = this.getMaxId();
+          this.contactListChangedEvent.next(contacts);
+        },
+        error(err) {
+          console.log('Fetching Contacts failed', err);
+        },
+      });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+    // console.log(this.maxContactId);
+  }
+
+  storeContacts() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    const subscription = this.httpClient
+      .put<Contact[]>(
+        'https://angular-cms-bf1a3-default-rtdb.firebaseio.com/contacts.json',
+        this.contacts,
+        { headers }
+      )
+      .subscribe({
+        next: (contacts) => {
+          console.log('Contacts updated:', contacts);
+          this.contactListChangedEvent.next(contacts);
+        },
+        error: (err) => console.error('Error updating contacts:', err),
+      });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
 
   getContacts(): Contact[] {
@@ -43,8 +90,9 @@ export class ContactService {
     }
     this.contacts.splice(pos, 1);
     // this.contactChangedEvent.emit(this.contacts.slice());
-    const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    // const contactsListClone = this.contacts.slice();
+    // this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts();
   }
 
   addContact(newContact: Contact) {
@@ -54,8 +102,9 @@ export class ContactService {
     this.maxContactId++;
     newContact.id = this.maxContactId.toString();
     this.contacts.push(newContact);
-    const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    // const contactsListClone = this.contacts.slice();
+    // this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts();
   }
 
   updateContact(originalContact: Contact, newContact: Contact) {
@@ -66,8 +115,9 @@ export class ContactService {
 
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
-    const contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    // const contactsListClone = this.contacts.slice();
+    // this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts();
   }
 
   getMaxId(): number {
@@ -79,6 +129,7 @@ export class ContactService {
         maxId = currentId;
       }
     });
+    // console.log(maxId);
     return maxId;
   }
 }

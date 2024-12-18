@@ -14,7 +14,7 @@ export class MessageEditComponent {
   @Output() addMessageEvent = new EventEmitter<Message>();
   subject: string = '';
   msgText: string = '';
-  currentSender = 'Joshua Adu-Mensah';
+  currentSender = '67625277cd226383592ede9d';
 
   constructor(private messageService: MessageService) {}
 

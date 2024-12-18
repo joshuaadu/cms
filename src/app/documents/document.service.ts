@@ -19,9 +19,7 @@ export class DocumentService implements OnInit {
     this.maxDocumentId = this.getMaxId();
     console.log('constructor');
     const subscription = this.httpClient
-      .get<Document[]>(
-        'https://angular-cms-bf1a3-default-rtdb.firebaseio.com/documents.json'
-      )
+      .get<Document[]>('http://localhost:3000/documents')
       .subscribe({
         next: (documents) => {
           console.log(documents);
@@ -66,21 +64,47 @@ export class DocumentService implements OnInit {
     }
     this.documents.splice(pos, 1);
     // this.documentChangedEvent.emit(this.documents.slice());
-    const documentsListClone = this.documents.slice();
+    // const documentsListClone = this.documents.slice();
     // this.documentListChangedEvent.next(documentsListClone);
-    this.storeDocuments();
+    // this.storeDocuments();
+    this.httpClient
+      .delete('http://localhost:3000/documents/' + document.id)
+      .subscribe((response) => {
+        this.documents.splice(pos, 1);
+        this.documentListChangedEvent.next(this.documents);
+        // this.sortAndSend();
+      });
   }
 
   addDocument(newDocument: Document) {
     if (newDocument === null) {
       return;
     }
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument);
-    // const documentsListClone = this.documents.slice();
-    // this.documentListChangedEvent.next(documentsListClone);
-    this.storeDocuments();
+    // this.maxDocumentId++;
+    // newDocument.id = this.maxDocumentId.toString();
+    // this.documents.push(newDocument);
+    // // const documentsListClone = this.documents.slice();
+    // // this.documentListChangedEvent.next(documentsListClone);
+    // this.storeDocuments();
+    // make sure id of the new Document is empty
+    newDocument.id = '';
+    // console.log('new document', newDocument);
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.httpClient
+      .post<{ message: string; document: Document }>(
+        'http://localhost:3000/documents',
+        newDocument,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new document to documents
+        this.documents.push(responseData.document);
+        this.documentListChangedEvent.next(this.documents);
+        // this.sortAndSend();
+      });
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
@@ -91,9 +115,23 @@ export class DocumentService implements OnInit {
 
     newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
-    const documentsListClone = this.documents.slice();
+    // const documentsListClone = this.documents.slice();
     // this.documentListChangedEvent.next(documentsListClone);
-    this.storeDocuments();
+    // this.storeDocuments();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // update database
+    this.httpClient
+      .put(
+        'http://localhost:3000/documents/' + originalDocument.id,
+        newDocument,
+        { headers: headers }
+      )
+      .subscribe((response) => {
+        this.documents[pos] = newDocument;
+        this.documentListChangedEvent.next(this.documents);
+        // this.sortAndSend();
+      });
   }
 
   storeDocuments() {
@@ -101,11 +139,9 @@ export class DocumentService implements OnInit {
       'Content-Type': 'application/json',
     });
     const subscription = this.httpClient
-      .put<Document[]>(
-        'https://angular-cms-bf1a3-default-rtdb.firebaseio.com/documents.json',
-        this.documents,
-        { headers }
-      )
+      .put<Document[]>('http://localhost:3000/documents', this.documents, {
+        headers,
+      })
       .subscribe({
         next: (documents) => {
           console.log('Documents updated:', documents);

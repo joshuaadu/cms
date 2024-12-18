@@ -13,9 +13,7 @@ export class MessageService {
 
   constructor(private httpClient: HttpClient, private destroyRef: DestroyRef) {
     const subscription = this.httpClient
-      .get<Message[]>(
-        'https://angular-cms-bf1a3-default-rtdb.firebaseio.com/messages.json'
-      )
+      .get<Message[]>('http://localhost:3000/messages')
       .subscribe({
         next: (messages) => {
           console.log('messages', messages);
@@ -79,8 +77,25 @@ export class MessageService {
   }
 
   addMessage(message: Message) {
-    this.messages.push(message);
+    message.id = '';
+    // this.messages.push(message);
     // this.messageChangedEvent.emit(this.messages.slice());
-    this.storeMessages();
+    // this.storeMessages();
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.httpClient
+      .post<{ message: string; messageData: Message }>(
+        'http://localhost:3000/messages',
+        message,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new document to documents
+        this.messages.push(responseData.messageData);
+        // this.messageChangedEvent.emit(this.messages);
+        // this.sortAndSend();
+      });
   }
 }
